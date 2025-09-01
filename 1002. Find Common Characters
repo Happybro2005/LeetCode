@@ -1,0 +1,35 @@
+int minFreq[26] = {0};
+    char* firstWord = words[0];
+    for (int i = 0; firstWord[i]; i++) {
+        minFreq[firstWord[i] - 'a']++;
+    }
+    for (int w = 1; w < wordsSize; w++) {
+        int freq[26] = {0};
+        char* word = words[w];
+        for (int i = 0; word[i]; i++) {
+            freq[word[i] - 'a']++;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] < minFreq[i]) {
+                minFreq[i] = freq[i];
+            }
+        }
+    }
+    int totalChars = 0;
+    for (int i = 0; i < 26; i++) {
+        totalChars += minFreq[i];
+    }
+    char** result = (char**)malloc(sizeof(char*) * totalChars);
+    *returnSize = totalChars;
+
+    int idx = 0;
+    for (int i = 0; i < 26; i++) {
+        for (int count = 0; count < minFreq[i]; count++) {
+            result[idx] = (char*)malloc(2 * sizeof(char));  
+            result[idx][0] = 'a' + i;
+            result[idx][1] = '\0';
+            idx++;
+        }
+    }
+
+    return result;
