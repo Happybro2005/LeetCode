@@ -1,0 +1,30 @@
+class Solution {
+private:
+    std::string getKey(const std::string& str) {
+        int counts[26] = {0}; 
+        for (char c : str) {
+            counts[c - 'a']++;
+        }
+        std::string key = "";
+        for (int i = 0; i < 26; ++i) {
+            key += "#" + std::to_string(counts[i]);
+        }
+        return key;
+    }
+
+public:
+    std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs) {
+        std::vector<std::vector<std::string>> result;
+        if (strs.empty()) return result;
+        std::unordered_map<std::string, std::vector<std::string>> m;
+        for (const std::string& str : strs) {
+            std::string key = getKey(str);
+            m[key].push_back(str);
+        }
+        for (const auto& pair : m) {
+            result.push_back(pair.second);
+        }
+        
+        return result;
+    }
+};
