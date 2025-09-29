@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int longestConsecutive(std::vector<int>& nums) {
+        if (nums.empty()) {
+            return 0;
+        }
+        std::unordered_set<int> numSet(nums.begin(), nums.end());
+        int longestConsecutiveSequence = 0;
+        for (int num : numSet) {
+            if (numSet.find(num - 1) == numSet.end()) {
+                int currentNumber = num;
+                int currentConsecutiveSequence = 1;
+                while (numSet.find(currentNumber + 1) != numSet.end()) {
+                    currentNumber += 1;
+                    currentConsecutiveSequence += 1;
+                }
+                longestConsecutiveSequence = std::max(longestConsecutiveSequence, currentConsecutiveSequence);
+            }
+        }
+        
+        return longestConsecutiveSequence;
+    }
+};
